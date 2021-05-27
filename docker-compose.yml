@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+# MYsql Image
+  mysql_db:
+    image: mysql:latest
+    container_name: mysqldb
+    restart: always
+    tty: true
+    ports:
+      - "3308:3308"
+    environment:
+      MYSQL_DATABASE: testdb
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+
+# Webapp Image
+  webserver:
+    restart: always
+    container_name: webserver
+    image: ksauto82/webapp:1.0
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8081:80"
