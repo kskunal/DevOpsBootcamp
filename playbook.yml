@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: install java and mavan
+      apt:
+        name:
+          - openjdk-8-jdk
+          - maven
+        state: present
+    - name: install server nginx
+      apt:
+        pkg: nginx
+        state: present
+    - name: install docker
+      apt:
+        pkg: docker.io
+        state: present
+    - name: start docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+    - name: docker run tomcat application
+      command: sudo docker run -it -d -p 8080:8080 ksauto82/tomcatdev:1.0
